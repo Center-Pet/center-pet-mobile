@@ -1,0 +1,107 @@
+.footer {
+    background-color: #D14D72;
+    color: #FEF2F4;
+    padding-bottom: 20px;
+    font-family: 'Alexandria', sans-serif;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .footer-container {
+    width: 80%;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+  
+  .footer-logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .footer-logo img {
+    height: 80px;
+    width: auto;
+  }
+  
+  .footer-brand {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .footer-nav {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .footer-nav a {
+    color: #FEF2F4;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-size: 16px;
+  }
+  
+  .footer-nav a:hover {
+    color: #FFABAB;
+    text-decoration: none;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 20px;
+    color: #FEF2F4;
+  }
+
+  .footer i {
+    color: #FEF2F4;
+  }
+
+  .footer span {
+    color: #FEF2F4;
+    font-size: 16px;
+  }
+
+  .social-media{
+    gap: 10px;
+    display: flex;
+    width: min-content;
+  }
+
+  /* mobile */
+  .mobile-social-links{
+    display: none;
+  }
+  .mobile-social-links>.social-links>.footer-logo{
+    margin-top: 10px;
+    margin-bottom: 8px;
+  }
+  .mobile-social-links>.social-links{
+    display: flex;
+    flex-direction: column;
+  }
+  .mobile-social-links>.social-links>.social-media{
+    display: flex;
+    align-items: center;
+  }
+  .mobile-social-links>.social-links>.social-media>span{
+    width: 75px;
+  }
+  .mobile-social-links>.social-links>.social-media>a{
+    margin: 5px;
+  }
+
+  /* Responsivo */
+  @media (max-width: 760px) {
+    .footer {
+      display: none;
+    }
+  }

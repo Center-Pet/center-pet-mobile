@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Alexandria&display=swap');
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espaçamento entre o input e o botão */
+    margin: 20px auto;
+    width: 100%;
+    max-width: 360px; /* Limita a largura máxima */
+}
+
+.search-bar-input {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-family: 'Alexandria', sans-serif;
+    border: 2px solid #D14D72; /* Borda com a cor do botão */
+    border-radius: 25px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar-input:focus {
+    border-color: #FFABAB; /* Cor da borda ao focar */
+    box-shadow: 0 0 8px rgba(209, 77, 114, 0.5); /* Efeito de foco */
+}
+
+.search-bar-button {
+    background-color: #D14D72;
+    color: #FEF2F4;
+    font-family: 'Alexandria', sans-serif;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-bar-button:hover {
+    filter: brightness(0.9); /* Escurece a cor no hover */
+    transform: scale(1.05); /* Aumenta levemente o botão no hover */
+}
+
+.search-bar-button:focus {
+    outline: 2px solid #D14D72;
+    outline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+    .search-bar-container {
+        flex-direction: column; /* Empilha o input e o botão em telas menores */
+        gap: 15px;
+    }
+
+    .search-bar-button {
+        width: 100%; /* O botão ocupa toda a largura */
+    }
+}

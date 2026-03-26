@@ -1,0 +1,56 @@
+
+#picture-input{
+    display: none;
+}
+.picture{
+    width: 300px;
+    height: 300px;
+    background-color:white;
+    border-radius: 50%;
+    border: 3px solid #FFABAB;
+    border-style: dashed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFABAB;
+    cursor: pointer;
+    transition: 0.2s filter ease-in-out;
+}
+.picture:hover{
+    filter: brightness(0.9);
+}
+.picture:active{
+    filter: brightness(1);
+}
+
+.picture_image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+
+#profile-img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 300px) and (max-width: 410px){
+    .picture{
+        width: 260px;
+        height: 260px;
+    }
+}
+@media screen and (min-width: 410px) and (max-width: 500px){
+    .form-input{
+        width: 20rem;
+    }
+    .picture{
+        width: 260px;
+        height: 260px;
+    }
+}

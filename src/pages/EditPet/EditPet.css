@@ -1,0 +1,695 @@
+@import url("https://fonts.googleapis.com/css?family=Alexandria");
+
+.pet-info-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Alexandria', Arial, sans-serif;
+}
+
+.pet-profile-card {
+  background-color: #ffb6b9;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pet-main-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: stretch;
+  min-height: 100%;
+}
+
+.pet-info-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 100%;
+  align-self: stretch;
+}
+
+.pet-image-container,
+.pet-details {
+  flex: 1;
+}
+
+.pet-image-container {
+  position: relative;
+  min-width: 300px;
+  height: 100%;
+  max-width: 600px;
+
+}
+
+/* Imagem principal do pet */
+.pet-main-image {
+  width: 100%;
+  height: 530px;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.pet-main-image.fade-out {
+  opacity: 0;
+}
+
+.edit-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ff8ba7;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+}
+
+/* Ajuste na seção de detalhes do pet */
+.pet-details {
+  background-color: #ffc2c7;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.pet-details h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.pet-details span {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Estilo específico para o campo de bio */
+.bio-field {
+  width: 100%;
+  margin: 10px 0;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 139, 167, 0.2);
+  box-sizing: border-box;
+}
+
+.bio-field textarea {
+  width: 100%;
+  min-height: 120px;
+  max-height: 200px;
+}
+
+/* Contador de caracteres para o campo de bio */
+.character-counter {
+  text-align: right;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.char-count.limit-warning {
+  color: #d14d72;
+  font-weight: bold;
+  resize: vertical;
+  padding: 0.9rem;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 0;
+  box-sizing: border-box;
+  font-family: 'Alexandria', Arial, sans-serif;
+}
+
+/* Remove estilos antigos que podem estar interferindo */
+.pet-bio {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Reorganiza os dados em duas colunas */
+.pet-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px 30px;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 5px;
+}
+
+.info-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.info-value {
+  color: #333;
+}
+
+/* Botão de adoção */
+.adopt-button {
+  background-color: #ff8ba7;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.adopt-button:hover {
+  background-color: #ff6b8b;
+}
+
+/* Aumentando o espaçamento para o botão de cancelamento */
+.adopt-button.cancel-button {
+  background-color: #FFFFFF;
+  color: #ff8ba7;
+  border: none;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+  /* Aumentando a margem superior */
+}
+
+.adopt-button.cancel-button:hover {
+  background-color: #f7eaf1;
+}
+
+/* Você também pode ajustar o container de botões para ter mais espaço */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+  /* Adicionando espaço entre os botões usando gap */
+}
+
+.adopt-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pet-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.pet-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.pet-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.pet-thumbnail.active {
+  border: 3px solid #ff8ba7;
+}
+
+.other-pets-section {
+  margin-top: 40px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  color: #ff6b8b;
+  font-size: 28px;
+  margin: 0;
+}
+
+.see-more-button {
+  background-color: transparent;
+  border: 1px solid #ff8ba7;
+  color: #ff8ba7;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.see-more-button:hover {
+  background-color: #ff8ba7;
+  color: white;
+}
+
+.other-pets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .other-pets-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .other-pets-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Botões de navegação */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+  color: #d25b82;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
+
+/* Estilos para campos editáveis */
+.editable-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.editable-field input,
+.editable-field textarea,
+.editable-field select {
+  padding: 8px 12px;
+  border: 2px solid #ff8ba7;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  font-family: 'Alexandria', Arial, sans-serif;
+}
+
+.editable-field input:focus,
+.editable-field textarea:focus,
+.editable-field select:focus {
+  outline: none;
+  border-color: #ff6b8b;
+  box-shadow: 0 0 0 2px rgba(255, 139, 167, 0.2);
+}
+
+.editable-field textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+.editable-field label {
+  font-weight: bold;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Botões de ação */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  /* Mudado para column */
+  width: 100%;
+
+}
+
+/* Ajustes para o grid de informações editáveis */
+.info-row.editable {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-bottom: none;
+  padding-bottom: 15px;
+}
+
+/* Indicador de campo obrigatório */
+.required::after {
+  content: '*';
+  color: #ff6b8b;
+  margin-left: 4px;
+}
+
+/* Mensagem de erro */
+.error-message {
+  color: #ff4444;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Ajustes responsivos para os campos editáveis */
+@media (max-width: 768px) {
+
+  .editable-field input,
+  .editable-field textarea,
+  .editable-field select {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .save-button,
+  .cancel-button {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  .pet-main-info {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .pet-image-container,
+  .pet-details {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .pet-details {
+    padding: 20px;
+    align-self: stretch;
+  }
+
+  .pet-details h2 {
+    font-size: 20px;
+  }
+
+  .pet-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .adopt-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  .pet-thumbnails {
+    gap: 8px;
+  }
+
+  .pet-thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+
+  .pet-main-image {
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pet-details h2 {
+    font-size: 18px;
+  }
+
+  .adopt-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .pet-thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+
+  .pet-main-image {
+    height: 300px;
+  }
+}
+
+/* Adicione estes estilos para a bio */
+.bio-field {
+  width: 100%;
+  margin: 10px 0;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 139, 167, 0.2);
+}
+
+.bio-field textarea {
+  width: 100%;
+  min-height: 120px;
+  max-height: 200px;
+  resize: none;
+  padding: 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 0;
+  font-family: 'Alexandria', Arial, sans-serif;
+}
+
+@media (max-width: 1130px) {
+  .pet-main-info {
+    flex-direction: column;
+  }
+
+  .pet-image-container,
+  .pet-details {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* Loading Spinner */
+.loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  /* Altura adequada para o conteúdo */
+  width: 100%;
+  margin: 20px 0;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(209, 77, 114, 0.2);
+  /* Cor rosa claro - corresponde ao tema */
+  border-radius: 50%;
+  border-top: 5px solid #D14D72;
+  /* Rosa do tema */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilos para dropdown customizado com checkboxes */
+.custom-multiselect {
+  position: relative;
+  width: 100%;
+}
+
+.multiselect-trigger {
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.multiselect-trigger::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #666;
+  transition: transform 0.3s ease;
+}
+
+.multiselect-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ff8ba7;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.multiselect-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.multiselect-option:hover {
+  background-color: #fff0f5;
+}
+
+.multiselect-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 16px;
+  width: 16px;
+  background-color: white;
+  border: 2px solid #ff8ba7;
+  border-radius: 3px;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.multiselect-option:hover .checkmark {
+  border-color: var(--main-pink);
+  background-color: #fff0f5;
+}
+
+.multiselect-option input[type="checkbox"]:checked ~ .checkmark {
+  background-color: var(--main-pink);
+  border-color: var(--main-pink);
+}
+
+.multiselect-option input[type="checkbox"]:checked ~ .checkmark:after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.option-text {
+  font-size: 14px;
+  color: #333;
+  font-family: 'Alexandria', Arial, sans-serif;
+}
+
+/* Estilo especial para "Nenhuma" */
+.multiselect-option:has(input[value="Nenhuma"]) .option-text {
+  font-weight: bold;
+  color: var(--main-pink);
+}
+
+/* Responsividade para dropdown customizado */
+@media (max-width: 768px) {
+  .multiselect-dropdown {
+    max-height: 150px;
+  }
+  
+  .multiselect-option {
+    padding: 6px 10px;
+  }
+  
+  .checkmark {
+    height: 14px;
+    width: 14px;
+  }
+  
+  .option-text {
+    font-size: 13px;
+  }
+}

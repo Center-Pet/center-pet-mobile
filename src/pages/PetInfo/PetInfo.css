@@ -1,0 +1,731 @@
+.pet-info-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  min-height: 70vh;
+  /* Adicionando altura mínima para o container principal */
+}
+
+.pet-profile-card {
+  background-color: #ffb6b9;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* Impede que elementos saiam do contêiner */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Adiciona espaçamento entre os elementos internos */
+}
+
+.pet-main-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.pet-info-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pet-image-container,
+.pet-details {
+  flex: 1;
+}
+
+.pet-image-container {
+  position: relative;
+  min-width: 300px;
+  height: 100%;
+  isolation: isolate; /* Cria um novo contexto de empilhamento */
+}
+
+/* Imagem principal do pet */
+.pet-main-image {
+  width: 100%;
+  /* Ocupa toda a largura disponível */
+  height: 530px;
+  /* Altura fixa */
+  object-fit: cover;
+  /* Ajusta a imagem para cobrir o contêiner sem distorção */
+  border-radius: 12px;
+  transition: opacity 0.5s ease-in-out;
+  /* Animação ao trocar a imagem */
+  opacity: 1;
+  cursor: zoom-in;
+}
+
+.pet-main-image.fade-out {
+  opacity: 0;
+  /* Transição para desaparecer */
+}
+
+.edit-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ff8ba7;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+}
+
+/* Ajuste na seção de detalhes do pet */
+.pet-details {
+  background-color: #ffc2c7;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Centraliza a bio */
+  gap: 20px;
+}
+
+.pet-details h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.pet-details span {
+  margin-top: 0;
+  margin-bottom: 14px;
+  font-size: 18px;
+  color: #333;
+}
+
+.pet-bio {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  max-width: 90%;
+  white-space: pre-wrap; /* Preserva quebras de linha e espaços */
+  word-wrap: break-word; /* Quebra palavras longas */
+  overflow-wrap: break-word; /* Suporte adicional para quebra de palavras */
+}
+
+/* Reorganiza os dados em duas colunas */
+.pet-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Duas colunas */
+  gap: 20px 40px;
+  /* Aumenta o espaçamento horizontal entre as colunas */
+  width: 100%;
+  /* Garante que ocupe toda a largura disponível */
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 5px;
+}
+
+.info-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.info-value {
+  color: #333;
+}
+
+/* Botão de adoção */
+.adopt-button {
+  background-color: #ff8ba7;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.adopt-button:hover {
+  background-color: #ff6b8b;
+}
+
+/* Estilo para o botão quando a adoção já foi solicitada */
+.adopt-button.requested {
+  background-color: #b3c0ad;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.adopt-button.requested:hover {
+  background-color: #b3c0ad;
+}
+
+/* Mensagem para pet adotado */
+.adopted-message {
+  background-color: #e8f5e8;
+  border: 2px solid #4caf50;
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.adopted-message p {
+  margin: 0;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Estilo para o botão de marcar como adotado */
+.mark-adopted-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mark-adopted-button:hover {
+  background-color: #45a049;
+}
+
+.mark-adopted-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pet-thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.pet-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.pet-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+.pet-thumbnail.active {
+  border: 3px solid #ff8ba7;
+}
+
+.other-pets-section {
+  margin-top: 40px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  color: #ff6b8b;
+  font-size: 28px;
+  margin: 0;
+}
+
+.see-more-button {
+  background-color: transparent;
+  border: 1px solid #ff8ba7;
+  color: #ff8ba7;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.see-more-button:hover {
+  background-color: #ff8ba7;
+  color: white;
+}
+
+.other-pets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .other-pets-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .other-pets-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Botões de navegação */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  margin-top: -25px; /* Metade da altura para centralizar */
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: background-color 0.3s ease;
+  color: #d25b82;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.prev-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  .pet-main-info {
+    flex-direction: column;
+    align-items: stretch;
+    /* Faz os elementos se esticarem para ocupar toda a largura */
+    gap: 15px;
+  }
+
+  .pet-image-container,
+  .pet-details {
+    width: 100%;
+    /* Garante que os elementos ocupem toda a largura disponível */
+    box-sizing: border-box;
+    /* Inclui padding e borda no cálculo da largura */
+  }
+
+  .pet-details {
+    padding: 15px;
+    align-self: stretch;
+    /* Faz a div .pet-details se esticar dentro do layout */
+    gap: 10px;
+  }
+
+  .pet-details h2 {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .petinfo-ong-subtitle {
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+
+  .location-subtitle {
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+  }
+
+  .pet-bio {
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+  }
+
+  .pet-info-grid {
+    grid-template-columns: 1fr;
+    /* Volta para uma coluna no mobile */
+    gap: 15px 20px;
+  }
+
+  .adopt-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  .pet-thumbnails {
+    gap: 8px;
+  }
+
+  .pet-thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+
+  .pet-main-image {
+    height: 400px;
+    /* Altura menor para telas menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .pet-details {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .pet-details h2 {
+    font-size: 18px;
+    margin-bottom: 3px;
+  }
+
+  .petinfo-ong-subtitle {
+    margin-bottom: 3px;
+    font-size: 0.9rem;
+  }
+
+  .location-subtitle {
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+  }
+
+  .pet-bio {
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+  }
+
+  .adopt-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .pet-thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+
+  .pet-main-image {
+    height: 300px;
+    /* Altura ainda menor para telas muito pequenas */
+  }
+}
+
+/* Estilo atualizado para o subtítulo da ONG */
+.petinfo-ong-subtitle {
+  color: #d14d72;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-align: center;
+  padding: 4px 15px;
+  border-radius: 20px;
+  display: inline-block;
+  letter-spacing: 0.5px;
+}
+
+.ong-subtitle strong {
+  font-weight: 700;
+  color: #d25b82;
+}
+
+/* Estilo para o link da ONG no subtítulo */
+.petinfo-ong-subtitle a,
+.petinfo-ong-subtitle a:visited {
+  color: #d14d72;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.petinfo-ong-subtitle a:hover {
+  color: #b03a5b;
+  text-decoration: underline;
+}
+
+.location-subtitle {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #555;
+  font-weight: 400;
+  font-size: 0.9rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+
+.pet-name-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pet-name-container h1 {
+  margin: 0;
+}
+
+/* Ajustando a largura dos botões e colocando-os lado a lado */
+.button-row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* Espaçamento entre os botões */
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.pet-action-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.info-message {
+  color: #666;
+  font-style: italic;
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Estilos para modal de imagem */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: zoom-out;
+}
+
+.image-modal-content {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+  will-change: transform;
+  transform-origin: center;
+}
+
+.close-modal-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(218, 52, 52, 0.568);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.close-modal-button:hover {
+  background-color: rgba(197, 87, 87, 0.5);
+}
+
+.image-navigation {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 8px 16px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 30px;
+  color: white;
+}
+
+/* Ajuste para os botões de navegação do modal - corrigindo alinhamento */
+.nav-button.prev-modal-button,
+.nav-button.next-modal-button {
+  position: relative;
+  top: auto;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  margin-top: 25px;
+  /* Impede que o conteúdo ultrapasse as bordas */
+}
+
+.nav-button.prev-modal-button:hover,
+.nav-button.next-modal-button:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Estilizando o conteúdo (seta) dos botões - ajustando para baixo */
+.nav-button.prev-modal-button span,
+.nav-button.next-modal-button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
+  /* Normaliza a altura da linha */
+  position: relative;
+  top: 2px;
+  /* Ajuste para baixo (era -1px) */
+  /* Tamanho ajustado para melhor visualização */
+  font-size: 24px;
+  /* Aumentado ligeiramente para melhor visibilidade */
+  margin-bottom: 5px;
+}
+
+/* Adicionando dica visual ao passar o mouse sobre a imagem */
+.pet-main-image {
+  position: relative;
+}
+
+.pet-main-image::after {
+  content: '🔍';
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.pet-main-image:hover::after {
+  opacity: 1;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+  .image-navigation {
+    bottom: 10px;
+    padding: 5px 10px;
+  }
+
+  .close-modal-button {
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    font-size: 22px;
+  }
+}
+
+/* Loading Spinner */
+.loading-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  /* Mudança principal: altura de 70% da viewport */
+  min-height: 500px;
+  /* Altura mínima para garantir espaço suficiente */
+  width: 100%;
+  margin: 20px 0;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(209, 77, 114, 0.2);
+  /* Cor rosa claro - corresponde ao tema */
+  border-radius: 50%;
+  border-top: 5px solid #D14D72;
+  /* Rosa do tema */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.petinfo-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.petinfo-title-row h2 {
+  margin-bottom: 0;
+  margin-right: 0;
+}

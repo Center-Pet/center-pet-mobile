@@ -1,0 +1,43 @@
+.pawwalk-horizontal {
+  animation: pawwalk-horizontal 1.2s infinite cubic-bezier(.45,.05,.55,.95);
+  transform-origin: 50% 50%;
+}
+
+.pawwalk-vertical {
+  animation: pawwalk-vertical 1s infinite cubic-bezier(.45,.05,.55,.95);
+  transform-origin: 50% 50%;
+}
+
+/* Animação para as almofadas da pata */
+.paw-pad {
+  animation: paw-pad-squeeze 1s infinite alternate cubic-bezier(.45,.05,.55,.95);
+  transform-origin: center center;
+}
+
+/* Animação horizontal com rotação e movimento mais orgânico */
+@keyframes pawwalk-horizontal {
+  0% { transform: translateX(0) rotate(0deg) scale(1); }
+  15% { transform: translateX(5px) rotate(-5deg) scale(1.02); }
+  30% { transform: translateX(12px) rotate(-2deg) scale(1.03); }
+  50% { transform: translateX(20px) rotate(0deg) scale(0.98); }
+  65% { transform: translateX(12px) rotate(2deg) scale(0.99); }
+  80% { transform: translateX(5px) rotate(5deg) scale(1.02); }
+  100% { transform: translateX(0) rotate(0deg) scale(1); }
+}
+
+/* Animação vertical com movimento mais realista */
+@keyframes pawwalk-vertical {
+  0% { transform: translateY(0) scale(1); }
+  20% { transform: translateY(-8px) scale(1.02) rotate(-2deg); }
+  40% { transform: translateY(-4px) scale(1) rotate(0deg); }
+  60% { transform: translateY(4px) scale(0.98) rotate(2deg); }
+  80% { transform: translateY(8px) scale(1) rotate(0deg); }
+  100% { transform: translateY(0) scale(1) rotate(-1deg); }
+}
+
+/* Animação de compressão para as almofadas da pata */
+@keyframes paw-pad-squeeze {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.96); }
+  100% { transform: scale(1.04); }
+}

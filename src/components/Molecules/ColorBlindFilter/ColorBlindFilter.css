@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css?family=Alexandria");
+
+#colorblind-controls {
+  position: fixed;
+  bottom: 28px; /* Mesma altura do botão de chat */
+  right: 100px; /* Posicionado à esquerda do botão de chat */
+  z-index: 999;
+}
+
+.colorblind-toggle {
+  width: 50px;
+  height: 50px;
+  background: #D14D72;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(209, 77, 114, 0.15);
+  transition: all 0.3s ease;
+}
+
+.colorblind-toggle:hover {
+  background: #ffabab;
+  transform: scale(1.08);
+}
+
+.colorblind-dropdown {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  width: 210px;
+  padding: 1rem;
+  font-family: 'Alexandria', sans-serif;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-title {
+  color: #333;
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.filter-options::-webkit-scrollbar {
+  width: 4px;
+}
+
+.filter-options::-webkit-scrollbar-thumb {
+  background-color: #D14D72;
+  border-radius: 10px;
+}
+
+.filter-option {
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: #555;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.filter-option:hover {
+  background: #FEF2F4;
+  color: #D14D72;
+}
+
+.filter-option.active {
+  background: #FEF2F4;
+  color: #D14D72;
+  font-weight: 600;
+}
+
+.filter-option:before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+  border: 1px solid #ddd;
+}
+
+.filter-option.active:before {
+  background: #D14D72;
+  border-color: #D14D72;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+  #colorblind-controls {
+    right: 95px;
+  }
+  
+  .colorblind-toggle {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .colorblind-dropdown {
+    width: 180px;
+    max-width: calc(100vw - 100px);
+  }
+}

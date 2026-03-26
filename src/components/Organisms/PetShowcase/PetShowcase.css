@@ -1,0 +1,205 @@
+.pet-showcase-container {
+    padding: 20px;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.pet-showcase-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.pet-showcase-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #d25b82;
+    margin: 0;
+}
+
+.pet-showcase-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.pet-showcase-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: 1px solid #d25b82;
+    color: #d25b82;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.pet-showcase-button:hover {
+    background-color: #f8e5eb;
+}
+
+.pet-showcase-carousel {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    position: relative;
+}
+
+.pet-showcase-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.pet-showcase-item {
+    flex: 0 0 auto;
+    transition: transform 0.3s ease;
+}
+
+.pet-showcase-item:hover {
+    transform: scale(1.03);
+}
+
+.pet-see-more-button {
+    display: flex;
+    font-family: 'Alexandria', sans-serif;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid #d25b82;
+    color: #d25b82;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: transparent;
+}
+
+.pet-see-more-button:hover {
+    background-color: #f8e5eb;
+}
+
+.no-pets-container {
+    width: 100%;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.no-pets-message {
+    color: #181818;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .pet-showcase-container {
+        padding: 15px;
+    }
+
+    .pet-showcase-header {
+        align-items: center;
+        gap: 0;
+    }
+
+    .pet-showcase-buttons {
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .pet-showcase-button {
+        padding: 8px 16px;
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 14px;
+    }
+
+    .pet-showcase-carousel {
+        gap: 12px;
+        padding: 5px 0;
+    }
+
+    .pet-showcase-item {
+        transform: none;
+    }
+
+    .pet-showcase-item:active {
+        transform: scale(0.98);
+    }
+}
+
+@media (max-width: 480px) {
+    .pet-showcase-container {
+        padding: 10px;
+    }
+
+    .pet-showcase-buttons {
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .pet-showcase-button {
+        padding: 6px 12px;
+        min-width: 34px;
+        min-height: 34px;
+        font-size: 14px;
+    }
+
+    .pet-see-more-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+/* Botão "Ver Todos" para mobile */
+.pet-see-more-button-mobile {
+    display: none; /* Esconde o botão no desktop */
+}
+
+/* Hover para ambos os botões */
+.pet-see-more-button:hover,
+.pet-see-more-button-mobile:hover {
+    background-color: #f8e5eb; /* Mesmo estilo de hover das setinhas */
+}
+
+/* Exibe o pet-showcase-buttons no desktop */
+.pet-showcase-buttons {
+    display: flex; /* Garante que o contêiner de botões esteja visível no desktop */
+}
+
+/* Adicione estilos consistentes com o Catalog */
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+/* Responsividade - título do petshowcase */
+@media (max-width: 719px){
+    .pet-showcase-container>.pet-showcase-header>.custom-title-wrapper>.custom-title{
+        font-size: 20px;
+    }
+}
+
+.pet-showcase-item {
+    position: relative;
+    z-index: 1;
+}
+
+.pet-showcase-item:hover {
+    z-index: 10;
+}

@@ -1,0 +1,135 @@
+body {
+    background-color: #FEF2F4;
+}
+
+.catalog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+
+.catalog-title {
+    font-size: 28px;
+    color: #555;
+    margin: 0;
+}
+
+.filter-container {
+    margin: 0 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.loading,
+.error {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+}
+
+.error {
+    color: #e74c3c;
+}
+
+/* Estilo para o contador de filtros ativos */
+.filter-count {
+    background-color: #FF8BA7;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-left: 8px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+/* Estilo para o botão de limpar filtros */
+.filtro-acoes {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    padding: 10px;
+    border-top: 1px solid #eee;
+}
+
+.limpar-filtros {
+    background-color: transparent;
+    color: #FF8BA7;
+    border: 1px solid #FF8BA7;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+}
+
+.limpar-filtros:hover {
+    background-color: #FF8BA7;
+    color: white;
+}
+
+/* Loading Spinner */
+.loading-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    /* Um pouco maior para o catálogo que tem mais conteúdo */
+    width: 100%;
+    margin: 20px 0;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(209, 77, 114, 0.2);
+    /* Cor rosa claro - corresponde ao tema */
+    border-radius: 50%;
+    border-top: 5px solid #D14D72;
+    /* Rosa do tema */
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Remover o antigo estilo de spinner */
+.loading-spinner .spinner {
+    display: none;
+}
+
+@media (min-width:481px) and (max-width: 780px) {
+    .catalog-header {
+        justify-content: center;
+        padding: 0 20px;
+    }
+}
+
+/* Responsividade - Filtro centralizado */
+
+@media (max-width: 480px) {
+    .catalog-header {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        padding: 0 10px;
+    }
+    .catalog-header > #filter{
+        width: 100%;
+    }
+}

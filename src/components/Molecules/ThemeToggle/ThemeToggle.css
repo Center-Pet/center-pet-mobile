@@ -1,0 +1,29 @@
+.theme-toggle-button {
+    position: fixed;
+    top: 1.5rem;
+    right: 23rem;
+    z-index: 1000;
+  
+    background-color: var(--bg-color, #f0f0f0);
+    color: var(--text-color, #111);
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+  
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .theme-toggle-button:hover {
+    transform: scale(1.05);
+    background-color: var(--text-color, #111);
+    color: var(--bg-color, #fff);
+  }
+  
+  .theme-toggle-button:focus {
+    outline: 3px solid #888;
+    outline-offset: 4px;
+  }
+  

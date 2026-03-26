@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css?family=Alexandria");
+
+.card_pet {
+    background-color: white;
+    margin: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 220px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+    /* Sombra mais fraca e menor */
+}
+
+.card_pet:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px var(--pink);
+    /* Sombra mais suave no hover com cor personalizada */
+}
+
+.card_img_placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* Sempre quadrado, acompanha a largura do card */
+    height: auto;
+    /* Remove altura fixa */
+    border-radius: 5px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    padding: 0;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card_img_placeholder>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Agora a imagem preenche e é cortada se necessário */
+    border-radius: 5px;
+    display: block;
+    background: white;
+}
+
+.card_pet_info {
+    text-align: left;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card_pet_details {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+    flex-wrap: nowrap;
+    /* Não quebra linha */
+    justify-content: flex-start;
+    /* Alinha à esquerda */
+    align-items: center;
+    /* Centraliza verticalmente */
+    overflow-x: hidden;
+    /* Remove rolagem */
+}
+
+.pet_type,
+.pet_gender,
+.pet_age {
+    font-size: 14px;
+    font-weight: 500;
+    color: #D14D72;
+    text-transform: capitalize;
+}
+
+.card_pet_name {
+    font-size: 16px;
+    /* Diminuído */
+    font-weight: 600;
+    margin: 0;
+    color: #000000;
+    line-height: 1.2;
+    white-space: nowrap;
+    /* Impede a quebra de linha */
+    overflow: hidden;
+    /* Esconde o texto que transborda */
+    text-overflow: ellipsis;
+    /* Adiciona "..." ao final */
+}
+
+/* Legacy class for compatibility */
+.card_pet_detail {
+    font-size: 14px;
+    margin: 4px 0;
+    color: #D14D72;
+}
+
+.pet_tag {
+    background-color: #fbe9ee;
+    color: #D14D72;
+    font-weight: 600;
+    padding: 2px 8px;
+    /* Diminuído */
+    border-radius: 20px;
+    /* Ajustado para acompanhar o tamanho */
+    font-size: 12px;
+    /* Diminuído */
+    margin-right: 4px;
+    /* Diminuído */
+    margin-bottom: 4px;
+    /* Diminuído */
+    display: inline-block;
+}
+
+/* Responsividade */
+@media (min-width: 821px) and (max-width: 1024px) {
+    .card_pet {
+        width: 200px;
+        height: 270px;
+        padding: 16px;
+    }
+}
+
+@media (min-width: 541px) and (max-width: 820px) {
+    .card_pet {
+        width: 200px;
+        height: 250px;
+        padding: 14px;
+    }
+
+    .card_pet_name {
+        font-size: 15px;
+    }
+
+    .pet_type,
+    .pet_gender,
+    .pet_age,
+    .card_pet_detail {
+        font-size: 11px;
+    }
+
+    .pet_tag {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 540px){
+    .card_pet{
+        width: 150px;
+        margin: 5px;
+        padding: 7px;
+    }
+}
+
+@media (min-width: 391px) and (max-width: 480px) {
+
+    .card_pet_name {
+        font-size: 14px;
+    }
+    .card_pet_details{
+        gap: 1px
+    }
+    .card_pet{
+        width: 130px;
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .pet_type,
+    .pet_gender,
+    .pet_age,
+    .card_pet_detail {
+        font-size: 10px;
+    }
+
+    .pet_tag {
+        padding: 2px 3px;
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 345px) and (max-width: 390px){
+    .card_pet{
+        width: 150px;
+        height: 180px;
+        padding: 10px;
+        margin: 5px;
+    }
+}
+
+@media (max-width: 344px){
+    .card_pet{
+        width: 150px;
+        height: 190px;
+        padding: 8px;
+    }
+}

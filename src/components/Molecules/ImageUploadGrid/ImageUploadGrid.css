@@ -1,0 +1,193 @@
+.image-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.main-image-slot {
+    aspect-ratio: 4/4;
+    /* Alterado de 4/3 para 4/4 para tornar mais quadrado */
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.image-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.image-upload-slot {
+    aspect-ratio: 1;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 100px;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.uploaded-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.add-image-button {
+    width: 100%;
+    height: 100%;
+    background-color: #ffc2c7;
+    border: 2px dashed #ff8ba7;
+    color: #ff8ba7;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-image-button:hover {
+    background-color: #ffb6b9;
+    transform: scale(1.05);
+}
+
+.add-image-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.delete-image-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 24px;
+    color: #ff8ba7;
+    transition: all 0.2s ease;
+    z-index: 2;
+}
+
+.delete-image-button:hover {
+    background-color: rgba(255, 139, 167, 0.9);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Responsividade para tablets */
+@media (max-width: 768px) {
+    .image-upload-grid {
+        gap: 8px;
+    }
+    
+    .image-upload-slot {
+        min-height: 80px;
+    }
+    
+    .add-image-button {
+        font-size: 1.5rem;
+    }
+    
+    .delete-image-button {
+        width: 28px;
+        height: 28px;
+        font-size: 20px;
+        top: 6px;
+        right: 6px;
+    }
+}
+
+/* Responsividade para mobile pequeno */
+@media (max-width: 600px) {
+    .image-upload-container {
+        gap: 8px;
+    }
+    
+    .image-upload-grid {
+        gap: 6px;
+    }
+    
+    .image-upload-slot {
+        min-height: 70px;
+    }
+    
+    .add-image-button {
+        font-size: 1.3rem;
+    }
+    
+    .delete-image-button {
+        width: 24px;
+        height: 24px;
+        font-size: 18px;
+        top: 4px;
+        right: 4px;
+    }
+}
+
+/* Responsividade para mobile muito pequeno */
+@media (max-width: 480px) {
+    .image-upload-grid {
+        gap: 4px;
+    }
+    
+    .image-upload-slot {
+        min-height: 60px;
+    }
+    
+    .add-image-button {
+        font-size: 1.1rem;
+    }
+    
+    .delete-image-button {
+        width: 20px;
+        height: 20px;
+        font-size: 16px;
+        top: 3px;
+        right: 3px;
+    }
+}
+
+/* Responsividade para mobile extra pequeno */
+@media (max-width: 360px) {
+    .image-upload-grid {
+        gap: 3px;
+    }
+    
+    .image-upload-slot {
+        min-height: 50px;
+    }
+    
+    .add-image-button {
+        font-size: 1rem;
+    }
+    
+    .delete-image-button {
+        width: 18px;
+        height: 18px;
+        font-size: 14px;
+        top: 2px;
+        right: 2px;
+    }
+}

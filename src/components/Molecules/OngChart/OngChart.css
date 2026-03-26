@@ -1,0 +1,143 @@
+.ong-card {
+  background: #FEF2F4;
+  border: 1.5px solid #fcc8d1;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(209, 77, 114, 0.08);
+  padding: 2rem 1.3rem 1.5rem;
+  width: 240px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.25s, box-shadow 0.25s, z-index 0.25s;
+  cursor: pointer;
+  box-sizing: border-box;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  transform-origin: center;
+  margin: 16px;
+}
+
+.ong-card:hover {
+  box-shadow: 0 12px 32px rgba(209, 77, 114, 0.13);
+  border-color: #d14d72;
+  background: #fff;
+  transform: scale(1.04);
+  z-index: 10;
+}
+
+.ong-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1.1rem;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(209, 77, 114, 0.05);
+  border: 2px solid #fcc8d1;
+}
+
+.ong-name {
+  font-size: 1.13rem;
+  color: #d14d72;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.2;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.ong-details-btn {
+  background: #fff;
+  color: #d14d72;
+  border: 1.5px solid #d14d72;
+  border-radius: 7px;
+  padding: 0.5rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: auto;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.ong-details-btn:hover {
+  background: #d14d72;
+  color: #fff;
+  border-color: #d14d72;
+  transform: scale(1.03);
+}
+
+/* Ajustes para visualização em grid (CatalogFilter) */
+.ongs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  width: 100%;
+  overflow: visible;
+}
+
+.ongs-grid .ong-card {
+  margin-bottom: 1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .ong-card {
+    width: 200px;
+    padding: 1.5rem 1rem 1.2rem;
+  }
+  
+  .ong-logo {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .ong-name {
+    font-size: 1rem;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ong-card {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .ong-name {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ong-card {
+    margin: 8px;
+  }
+  .ong-card:hover {
+    transform: scale(1.025);
+  }
+  
+  .ong-name {
+    font-size: 0.95rem;
+  }
+}
+
+.ong-chart-card {
+  position: relative;
+  z-index: 1;
+}
+.ong-chart-card:hover {
+  z-index: 10;
+}

@@ -1,0 +1,79 @@
+/* Container principal */
+.custom-avatar-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo do avatar */
+.custom-avatar-icon {
+  margin-left: auto; /* Empurra o CustomComponent para a direita */
+  z-index: 3;
+  display: flex;
+  align-items: center; /* Alinha verticalmente o CustomComponent */
+  justify-content: center; /* Centraliza o conteúdo do CustomComponent */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 5px solid #D14D72;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-avatar-icon:hover {
+  transform: scale(1.1);
+  border-color: #FFABAB;
+}
+
+/* Estilo do menu */
+.custom-avatar-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: var(--main-pink);
+  color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  padding: 10px 0;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.custom-avatar-menu-item {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  color: #FEF2F4;
+  font-family: 'Alexandria', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-avatar-menu-item:hover {
+  background-color: #FFABAB;
+  color: #D14D72;
+}
+
+.custom-avatar-menu a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .custom-avatar-menu{
+    left: 0px;
+    top: 60px;
+  }
+  .custom-avatar-menu-item {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

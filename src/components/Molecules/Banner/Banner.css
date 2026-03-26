@@ -1,0 +1,251 @@
+/* ANIMAÇÃO SUAVE */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- banner PRINCIPAL (imagem + texto) --- */
+.banner-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, rgba(255, 226, 220, 0.8), rgba(255, 167, 161, 0.8)),
+    url('/assets/background-pattern.svg'); /* Adiciona um padrão de fundo */
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  padding: 0;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease forwards;
+  position: relative;
+}
+
+.banner-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.banner-slide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  animation: fadeInUp 1s ease forwards;
+  flex-direction: row; /* Default order: text on left, image on right */
+}
+
+/* Lógica de alternância de posição (inverte dependendo do slide) */
+.banner-slide.right {
+  flex-direction: row-reverse; /* Inverte a ordem para este slide */
+}
+
+/* Ajuste da posição das imagens */
+.banner-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  gap: 1rem;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.banner-content h1 {
+  font-size: 3rem; /* Aumenta o tamanho do título */
+  color: #402323;
+  margin: 0;
+  font-family: 'Poppins', sans-serif; /* Fonte primária para títulos */
+}
+
+.banner-content p {
+  font-size: 1.2rem; /* Aumenta o tamanho do texto descritivo */
+  color: #555;
+  max-width: 500px;
+  font-family: 'Roboto', sans-serif; /* Fonte secundária para textos descritivos */
+}
+
+.banner-button {
+  background: linear-gradient(90deg, #D14D72 0%, #FFABAB 100%);
+  color: #fff;
+  border: 2px solid #D14D72;
+  padding: 1.1rem 2.4rem;
+  border-radius: 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(209, 77, 114, 0.10), 0 1.5px 4px rgba(0,0,0,0.06);
+  transition: 
+    background 0.35s cubic-bezier(.4,0,.2,1),
+    color 0.25s cubic-bezier(.4,0,.2,1),
+    border 0.25s cubic-bezier(.4,0,.2,1),
+    transform 0.25s cubic-bezier(.4,0,.2,1),
+    box-shadow 0.25s cubic-bezier(.4,0,.2,1);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.banner-button::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(209, 77, 114, 0.07);
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s cubic-bezier(.4,0,.2,1), height 0.4s cubic-bezier(.4,0,.2,1);
+  z-index: 0;
+}
+
+.banner-button:hover,
+.banner-button:focus-visible {
+  background: linear-gradient(90deg, #FCC8D1 0%, #FEF2F4 100%);
+  color: #D14D72;
+  border: 2px solid #FFABAB;
+  transform: translateY(-3px) scale(1.045);
+  box-shadow:
+    0 8px 32px 0 rgba(209, 77, 114, 0.13),
+    0 2px 8px 0 rgba(0,0,0,0.08);
+}
+
+.banner-button:hover::after,
+.banner-button:focus-visible::after {
+  width: 220%;
+  height: 600%;
+}
+
+.banner-button:focus-visible {
+  outline: 2.5px solid #D14D72;
+  outline-offset: 2px;
+}
+
+/* Ajuste das imagens */
+.banner-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.banner-image img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsivo do banner */
+@media (max-width: 992px) {
+  .banner-section {
+    flex-direction: column;
+    height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .banner-image img {
+    max-width: 300px;
+  }
+
+  .banner-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .banner-content p {
+    font-size: 1rem;
+  }
+
+  .banner-button {
+    font-size: 1.08rem;
+    padding: 0.9rem 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-section {
+    flex-direction: column;
+    height: auto;
+    padding: 1.5rem 0.5rem;
+  }
+
+  .banner-slide {
+    flex-direction: column;
+    text-align: center;
+    min-height: 350px;
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .banner-content {
+    padding: 0.5rem;
+    gap: 0.8rem;
+    opacity: 1;
+    animation: none;
+  }
+
+  .banner-content h1 {
+    font-size: 2rem;
+  }
+
+  .banner-content p {
+    font-size: 1.1rem;
+  }
+
+  .banner-button {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .banner-image {
+    padding: 0.5rem 0;
+  }
+
+  .banner-image img {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-section {
+    padding: 1rem 0.2rem;
+  }
+
+  .banner-content h1 {
+    font-size: 1.3rem;
+  }
+
+  .banner-content p {
+    font-size: 0.95rem;
+  }
+
+  .banner-button {
+    font-size: 0.95rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .banner-image {
+    display: none; /* Esconde a imagem em telas muito pequenas */
+  }
+}
