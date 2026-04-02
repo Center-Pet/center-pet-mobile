@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.expo
+.expo-shared
+web-build
 
 # Editor directories and files
 .vscode/*

@@ -1,12 +1,45 @@
-# React + Vite
+# Center Pet Mobile (React Native + Expo)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório foi migrado para **React Native** usando **Expo**.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 20+
+- Expo Go no celular (Android/iOS) ou emulador configurado
 
-## Expanding the ESLint configuration
+## Configuracao de ambiente
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+O endpoint da API usa a variavel:
+
+`EXPO_PUBLIC_API_URL`
+
+Arquivos de exemplo ja existentes:
+
+- `.env.development`
+- `.env.test`
+- `.env.production`
+
+## Como rodar
+
+```bash
+npm install
+npm run start
+```
+
+Depois:
+
+- pressione `a` para Android
+- pressione `i` para iOS
+- ou escaneie o QR code com Expo Go
+
+## Estrutura mobile nova
+
+- `App.js` - entrada principal do app
+- `src-mobile/navigation` - rotas do app
+- `src-mobile/contexts` - contexto de autenticacao
+- `src-mobile/screens` - telas React Native
+- `src-mobile/services` - servicos HTTP e persistencia local
+
+## Observacao
+
+O codigo web antigo em `src/` foi mantido como legado para referencia durante a migracao gradual das demais telas.
