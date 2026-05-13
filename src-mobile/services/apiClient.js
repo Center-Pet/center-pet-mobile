@@ -15,6 +15,7 @@ export async function apiRequest(path, options = {}) {
   if (!response.ok) {
     const message =
       (typeof data === "object" && data?.message) ||
+      (typeof data === "object" && typeof data?.error === "string" && data.error) ||
       `Erro HTTP ${response.status} em ${path}`;
     throw new Error(message);
   }

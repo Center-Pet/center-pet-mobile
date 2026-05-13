@@ -23,7 +23,7 @@ export default function AdopterProfileScreen({ route, navigation }) {
   return (
     <AppScreen navigation={navigation} activeTab="form">
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-        <PageIntro title="Perfil do adotante" subtitle="Seus dados de conta e adocao" />
+        <PageIntro title="Perfil do adotante" subtitle="Informacoes publicas do seu perfil" />
 
         <PinkCard className="items-center">
           {adopter?.profileImg || adopter?.avatar || adopter?.photo ? (
@@ -53,22 +53,6 @@ export default function AdopterProfileScreen({ route, navigation }) {
           <View className="mt-2 w-full rounded-2xl border border-[#F1D3DD] bg-white p-3">
             <Text className="text-xs font-semibold uppercase text-[#8C6B79]">Adotante seguro</Text>
             <Text className="mt-1 text-sm text-[#3E3540]">{adopter?.safeAdopter ? "Sim" : "Nao"}</Text>
-          </View>
-        </PinkCard>
-
-        <PinkCard className="mt-3">
-          <Text className="mb-2 text-base font-bold text-[#4C3A42]">Dados da conta</Text>
-          <View className="mb-2 rounded-2xl border border-[#F1D3DD] bg-white p-3">
-            <Text className="text-xs font-semibold uppercase text-[#8C6B79]">Email</Text>
-            <Text className="mt-1 text-sm text-[#3E3540]">{adopter?.email || "Nao informado"}</Text>
-          </View>
-          <View className="mb-2 rounded-2xl border border-[#F1D3DD] bg-white p-3">
-            <Text className="text-xs font-semibold uppercase text-[#8C6B79]">CPF</Text>
-            <Text className="mt-1 text-sm text-[#3E3540]">{adopter?.cpf || "Nao informado"}</Text>
-          </View>
-          <View className="rounded-2xl border border-[#F1D3DD] bg-white p-3">
-            <Text className="text-xs font-semibold uppercase text-[#8C6B79]">Telefone</Text>
-            <Text className="mt-1 text-sm text-[#3E3540]">{adopter?.phone || "Nao informado"}</Text>
           </View>
         </PinkCard>
 

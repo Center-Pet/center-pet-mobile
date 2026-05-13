@@ -1,86 +1,103 @@
-import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import React, { useCallback, useEffect, useState } from "react";
+import { Alert, View } from "react-native";
 import PetForm from "../components/forms/PetForm";
 import AppScreen from "../components/ui/AppScreen";
+import AppButton from "../components/ui/AppButton";
 import LoadingView from "../components/ui/LoadingView";
 import PageIntro from "../components/ui/PageIntro";
 import PinkCard from "../components/ui/PinkCard";
 import ScreenContent from "../components/ui/ScreenContent";
+import { collectPetImageList, MAX_PET_IMAGES, petToFormState } from "../constants/petFormConstants";
 import { useAuth } from "../hooks/useAuth";
 import { getPetById, updatePet } from "../services/petService";
 import { uploadImage } from "../services/uploadService";
+import { buildUpdatePetBody, validateUpdatePetForm } from "../utils/petRegisterPayload";
+
+function newImageId() {
+  return `pet-img-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
 
 export default function EditPetScreen({ route, navigation }) {
   const { petId } = route.params;
   const { token } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [form, setForm] = useState({
-    name: "",
-    type: "",
-    age: "",
-    status: "",
-    specialCondition: "",
-    image: ""
-  });
+  const [form, setForm] = useState(() => petToFormState(null));
+  const [images, setImages] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
     async function load() {
+      setLoading(true);
       try {
         const pet = await getPetById(petId);
-        setForm({
-          name: pet.name || "",
-          type: pet.type || "",
-          age: pet.age || "",
-          status: pet.status || "Disponível",
-          specialCondition: pet.specialCondition || "",
-          image: pet.image || ""
-        });
+        if (cancelled) return;
+        setForm(petToFormState(pet));
+        const urls = collectPetImageList(pet).slice(0, MAX_PET_IMAGES);
+        setImages(urls.map((uri) => ({ id: newImageId(), uri })));
+      } catch {
+        if (!cancelled) Alert.alert("Erro", "Não foi possível carregar o pet.");
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
-
-    load().catch(() => setLoading(false));
+    load();
+    return () => {
+      cancelled = true;
+    };
   }, [petId]);
+
+  const runSave = useCallback(async () => {
+    if (!token) {
+      Alert.alert("Sessão", "Faça login novamente.");
+      return;
+    }
+    if (images.length === 0) {
+      Alert.alert("Fotos", "Mantenha pelo menos uma foto do pet.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const urls = [];
+      for (const img of images) {
+        if (/^https?:\/\//i.test(img.uri)) urls.push(img.uri);
+        else {
+          const u = await uploadImage(img.uri, { mimeType: img.mimeType, fileName: img.fileName });
+          urls.push(u);
+        }
+      }
+      const body = buildUpdatePetBody(form, urls);
+      await updatePet(petId, body, token);
+      Alert.alert("Pet atualizado", "Dados atualizados com sucesso.", [{ text: "OK", onPress: () => navigation.goBack() }]);
+    } catch (err) {
+      Alert.alert("Falha", err?.message || "Não foi possível salvar.");
+    } finally {
+      setSubmitting(false);
+    }
+  }, [form, images, petId, token, navigation]);
+
+  const onSubmit = useCallback(() => {
+    const e = validateUpdatePetForm(form);
+    setErrors(e);
+    if (Object.keys(e).length > 0) return;
+    Alert.alert("Confirmar alterações", "Salvar os dados do pet?", [
+      { text: "Revisar", style: "cancel" },
+      { text: "Salvar", onPress: () => runSave() }
+    ]);
+  }, [form, runSave]);
 
   if (loading) return <LoadingView />;
 
   return (
     <AppScreen navigation={navigation} activeTab="form">
       <ScreenContent>
-        <PageIntro title="Editar pet" subtitle="Atualize os dados do pet" />
+        <PageIntro title="Editar pet" subtitle="Mesmos campos e fotos que no cadastro web." />
         <PinkCard>
-          <PetForm
-            form={form}
-            setForm={setForm}
-            onPickImage={async () => {
-              const result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images
-              });
-              if (result.canceled) return;
-              const url = await uploadImage(result.assets[0].uri);
-              setForm((prev) => ({ ...prev, image: url }));
-            }}
-            submitLabel="Salvar alteracoes"
-            onSubmit={async () => {
-              try {
-                await updatePet(
-                  petId,
-                  {
-                    ...form,
-                    image: form.image ? [form.image] : [],
-                    health: { specialCondition: form.specialCondition || "Nenhuma" }
-                  },
-                  token
-                );
-                Alert.alert("Pet atualizado", "Dados atualizados com sucesso.");
-                navigation.goBack();
-              } catch (error) {
-                Alert.alert("Falha", error.message);
-              }
-            }}
-          />
+          <PetForm form={form} setForm={setForm} images={images} setImages={setImages} errors={errors} />
+          <View className="mt-2">
+            <AppButton title={submitting ? "Salvando..." : "Salvar alterações"} onPress={onSubmit} disabled={submitting} />
+          </View>
         </PinkCard>
       </ScreenContent>
     </AppScreen>

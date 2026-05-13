@@ -40,62 +40,42 @@ export default function AppNavigator() {
   }
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen name={ROUTES.Home} component={HomeScreen} options={{ title: "Center Pet" }} />
-      <Stack.Screen name={ROUTES.Catalog} component={CatalogScreen} options={{ title: "Catalogo" }} />
-      <Stack.Screen name={ROUTES.CatalogFilter} component={CatalogFilterScreen} options={{ title: "Filtro" }} />
-      <Stack.Screen name={ROUTES.PetInfo} component={PetDetailsScreen} options={{ title: "Pet" }} />
-      <Stack.Screen name={ROUTES.OngProfile} component={OngProfileScreen} options={{ title: "Perfil da ONG" }} />
-      <Stack.Screen name={ROUTES.Terms} component={TermsScreen} options={{ title: "Termos" }} />
-      <Stack.Screen name={ROUTES.Settings} component={SettingsScreen} options={{ title: "Configuracoes" }} />
-      <Stack.Screen name={ROUTES.TestDraft} component={TestDraftScreen} options={{ title: "Testes" }} />
-      <Stack.Screen name={ROUTES.NotFound} component={NotFoundScreen} options={{ title: "Nao encontrada" }} />
-      <Stack.Screen name={ROUTES.ResetPassword} component={ResetPasswordScreen} options={{ title: "Redefinir senha" }} />
-      <Stack.Screen
-        name={ROUTES.ForgotPassword}
-        component={ForgotPasswordScreen}
-        options={{ title: "Recuperar senha" }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={ROUTES.Home} component={HomeScreen} />
+      <Stack.Screen name={ROUTES.Catalog} component={CatalogScreen} />
+      <Stack.Screen name={ROUTES.CatalogFilter} component={CatalogFilterScreen} />
+      <Stack.Screen name={ROUTES.PetInfo} component={PetDetailsScreen} />
+      <Stack.Screen name={ROUTES.OngProfile} component={OngProfileScreen} />
+      <Stack.Screen name={ROUTES.Terms} component={TermsScreen} />
+      <Stack.Screen name={ROUTES.Settings} component={SettingsScreen} />
+      <Stack.Screen name={ROUTES.TestDraft} component={TestDraftScreen} />
+      <Stack.Screen name={ROUTES.NotFound} component={NotFoundScreen} />
+      <Stack.Screen name={ROUTES.ResetPassword} component={ResetPasswordScreen} />
+      <Stack.Screen name={ROUTES.ForgotPassword} component={ForgotPasswordScreen} />
 
       {!isAuthenticated && (
         <>
-          <Stack.Screen name={ROUTES.Login} component={LoginScreen} options={{ title: "Entrar" }} />
-          <Stack.Screen
-            name={ROUTES.RegisterOng}
-            component={RegisterOngScreen}
-            options={{ title: "Cadastro ONG" }}
-          />
+          <Stack.Screen name={ROUTES.Login} component={LoginScreen} />
+          <Stack.Screen name={ROUTES.RegisterOng} component={RegisterOngScreen} />
         </>
       )}
 
       {isAuthenticated && (userType === "Ong" || userType === "ONG") && (
         <>
-          <Stack.Screen name={ROUTES.HomeOng} component={HomeOngScreen} options={{ title: "Home ONG" }} />
-          <Stack.Screen
-            name={ROUTES.RegisterPet}
-            component={RegisterPetScreen}
-            options={{ title: "Cadastrar pet" }}
-          />
-          <Stack.Screen name={ROUTES.EditPet} component={EditPetScreen} options={{ title: "Editar pet" }} />
-          <Stack.Screen name={ROUTES.EditOrg} component={EditOrgScreen} options={{ title: "Editar ONG" }} />
-          <Stack.Screen name={ROUTES.Adoption} component={AdoptionScreen} options={{ title: "Adocao" }} />
-          <Stack.Screen name={ROUTES.Dashboard} component={DashboardScreen} options={{ title: "Dashboard" }} />
+          <Stack.Screen name={ROUTES.HomeOng} component={HomeOngScreen} />
+          <Stack.Screen name={ROUTES.RegisterPet} component={RegisterPetScreen} />
+          <Stack.Screen name={ROUTES.EditPet} component={EditPetScreen} />
+          <Stack.Screen name={ROUTES.EditOrg} component={EditOrgScreen} />
+          <Stack.Screen name={ROUTES.Adoption} component={AdoptionScreen} />
+          <Stack.Screen name={ROUTES.Dashboard} component={DashboardScreen} />
         </>
       )}
 
       {isAuthenticated && userType !== "Ong" && userType !== "ONG" && (
         <>
-          <Stack.Screen
-            name={ROUTES.AdopterProfile}
-            component={AdopterProfileScreen}
-            options={{ title: "Meu perfil" }}
-          />
-          <Stack.Screen name={ROUTES.EditUser} component={EditUserScreen} options={{ title: "Editar perfil" }} />
-          <Stack.Screen
-            name={ROUTES.FormSafeAdopter}
-            component={FormSafeAdopterScreen}
-            options={{ title: "Adotante seguro" }}
-          />
+          <Stack.Screen name={ROUTES.AdopterProfile} component={AdopterProfileScreen} />
+          <Stack.Screen name={ROUTES.EditUser} component={EditUserScreen} />
+          <Stack.Screen name={ROUTES.FormSafeAdopter} component={FormSafeAdopterScreen} />
         </>
       )}
     </Stack.Navigator>

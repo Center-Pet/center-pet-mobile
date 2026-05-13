@@ -17,7 +17,7 @@ export default function TestDraftScreen({ navigation }) {
           title="Selecionar imagem"
           onPress={async () => {
             const result = await ImagePicker.launchImageLibraryAsync({
-              mediaTypes: ImagePicker.MediaTypeOptions.Images
+              mediaTypes: ["images"]
             });
             if (!result.canceled) {
               setImage(result.assets[0].uri);

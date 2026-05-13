@@ -1,15 +1,6 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  Alert,
-  FlatList,
-  Image,
-  Pressable,
-  RefreshControl,
-  ScrollView,
-  Text,
-  View,
-  useWindowDimensions
-} from "react-native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Alert, Image, Pressable, RefreshControl, ScrollView, Text, View, useWindowDimensions } from "react-native";
+import OngDashboardContent from "../components/ong/OngDashboardContent";
 import AppScreen from "../components/ui/AppScreen";
 import AppButton from "../components/ui/AppButton";
 import EmptyState from "../components/ui/EmptyState";
@@ -17,20 +8,22 @@ import LoadingView from "../components/ui/LoadingView";
 import OngCard from "../components/ui/OngCard";
 import PetCard from "../components/ui/PetCard";
 import { ROUTES } from "../navigation/routeNames";
-import { getLatestPets } from "../services/petService";
-import { getAllOngs } from "../services/ongService";
+import { getAdoptionsByOng } from "../services/adoptionService";
+import { getAllOngs, getOngById } from "../services/ongService";
+import { getLatestPets, getPetsByOng } from "../services/petService";
 import { useAuth } from "../hooks/useAuth";
 
 export default function HomeScreen({ navigation }) {
   const { user, userType, token } = useAuth();
   const [pets, setPets] = useState([]);
   const [ongs, setOngs] = useState([]);
+  const [ongHome, setOngHome] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const isOngUser = (userType === "Ong" || userType === "ONG") && Boolean(user?._id) && Boolean(token);
+
   const [heroIndex, setHeroIndex] = useState(0);
   const { width } = useWindowDimensions();
-  const heroListRef = useRef(null);
-
   const heroSlides = [
     {
       image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80",
@@ -60,13 +53,33 @@ export default function HomeScreen({ navigation }) {
       const [petsData, ongsData] = await Promise.all([getLatestPets(), getAllOngs(token)]);
       setPets(petsData);
       setOngs(ongsData);
+
+      if (isOngUser) {
+        let ong = null;
+        try {
+          ong = await getOngById(user._id, token);
+        } catch {
+          ong = null;
+        }
+        try {
+          const [myPets, myAdoptions] = await Promise.all([
+            getPetsByOng(user._id, token),
+            getAdoptionsByOng(user._id, token)
+          ]);
+          setOngHome({ ong, pets: myPets, adoptions: myAdoptions });
+        } catch {
+          setOngHome({ ong, pets: [], adoptions: [] });
+        }
+      } else {
+        setOngHome(null);
+      }
     } catch (error) {
       Alert.alert("Erro", error.message);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [isOngUser, token, user?._id]);
 
   useEffect(() => {
     loadPets();
@@ -78,6 +91,23 @@ export default function HomeScreen({ navigation }) {
 
   const isLogged = Boolean(user?._id);
 
+  if (isOngUser) {
+    return (
+      <AppScreen navigation={navigation} activeTab="home" showTopNav={false}>
+        <OngDashboardContent
+          navigation={navigation}
+          activeTab="home"
+          ong={ongHome?.ong}
+          pets={ongHome?.pets || []}
+          adoptions={ongHome?.adoptions || []}
+          user={user}
+          refreshing={refreshing}
+          onRefresh={() => loadPets(true)}
+        />
+      </AppScreen>
+    );
+  }
+
   return (
     <AppScreen navigation={navigation} activeTab="home">
       <ScrollView
@@ -85,12 +115,9 @@ export default function HomeScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
       >
         <View className="mb-4 overflow-hidden rounded-3xl bg-[#F6BFCB] p-3">
-          <FlatList
-            ref={heroListRef}
-            data={heroSlides}
+          <ScrollView
             horizontal
             pagingEnabled
-            keyExtractor={(_, i) => String(i)}
             showsHorizontalScrollIndicator={false}
             snapToAlignment="center"
             decelerationRate="fast"
@@ -98,8 +125,9 @@ export default function HomeScreen({ navigation }) {
               const current = Math.round(event.nativeEvent.contentOffset.x / heroWidth);
               setHeroIndex(current);
             }}
-            renderItem={({ item }) => (
-              <View style={{ width: heroWidth }} className="flex-row items-center pr-2">
+          >
+            {heroSlides.map((item, index) => (
+              <View key={String(index)} style={{ width: heroWidth }} className="flex-row items-center pr-2">
                 <Image source={{ uri: item.image }} className="h-28 w-28 rounded-2xl bg-gray-200" />
                 <View className="ml-3 flex-1">
                   <Text className="text-2xl font-extrabold text-[#2B1F24]">{item.title}</Text>
@@ -111,8 +139,8 @@ export default function HomeScreen({ navigation }) {
                   />
                 </View>
               </View>
-            )}
-          />
+            ))}
+          </ScrollView>
           <View className="mt-3 flex-row justify-center">
             {heroSlides.map((_, index) => (
               <View
@@ -146,22 +174,25 @@ export default function HomeScreen({ navigation }) {
             </Pressable>
           </View>
 
-          <FlatList
-            horizontal
-            data={pets.slice(0, 8)}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View className="mr-3">
-                <PetCard
-                  pet={item}
-                  compact
-                  onPress={() => navigation.navigate(ROUTES.PetInfo, { petId: item.id, initialPet: item })}
-                />
+          {pets.slice(0, 8).length ? (
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <View className="flex-row">
+                {pets.slice(0, 8).map((item) => (
+                  <View key={String(item.id || item._id)} className="mr-3">
+                    <PetCard
+                      pet={item}
+                      compact
+                      onPress={() =>
+                        navigation.navigate(ROUTES.PetInfo, { petId: item.id || item._id, initialPet: item })
+                      }
+                    />
+                  </View>
+                ))}
               </View>
-            )}
-            ListEmptyComponent={<EmptyState message="Nenhum pet encontrado." />}
-            showsHorizontalScrollIndicator={false}
-          />
+            </ScrollView>
+          ) : (
+            <EmptyState message="Nenhum pet encontrado." />
+          )}
         </View>
 
         <Text className="mb-2 mt-4 text-2xl font-bold text-textMain">ONGs em destaque</Text>
@@ -172,18 +203,6 @@ export default function HomeScreen({ navigation }) {
             onPress={() => navigation.navigate(ROUTES.OngProfile, { ongId: ong._id, ongSlug: ong.slug })}
           />
         ))}
-
-        {userType === "Ong" || userType === "ONG" ? (
-          <View className="mb-2 mt-2 flex-row gap-2">
-            <AppButton title="Area ONG" className="flex-1" onPress={() => navigation.navigate(ROUTES.HomeOng)} />
-            <AppButton
-              title="Dashboard"
-              variant="secondary"
-              className="flex-1"
-              onPress={() => navigation.navigate(ROUTES.Dashboard)}
-            />
-          </View>
-        ) : null}
 
         <View className="mb-8 mt-2 gap-2">
           {!isLogged ? (

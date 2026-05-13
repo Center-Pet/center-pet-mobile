@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Alert, FlatList, Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AppButton from "../components/ui/AppButton";
 import AppScreen from "../components/ui/AppScreen";
@@ -11,6 +11,7 @@ import { useAuth } from "../hooks/useAuth";
 import { createAdoptionRequest } from "../services/adoptionService";
 import { getPetById, deletePet, getLatestPets, getSimilarPets } from "../services/petService";
 import { getOngById } from "../services/ongService";
+import { buildSimilarPetsList } from "../utils/petSimilar";
 
 function getWaitingTime(waitingTime) {
   if (!waitingTime) return "Nao informado";
@@ -59,6 +60,7 @@ export default function PetDetailsScreen({ route, navigation }) {
 
   useEffect(() => {
     if (!petId) return;
+    setCurrentImage(0);
 
     async function loadPet() {
       try {
@@ -74,30 +76,19 @@ export default function PetDetailsScreen({ route, navigation }) {
         const similarByType = await getSimilarPets({
           type: data?.type,
           excludeId: petId,
-          limit: 12
+          limit: 24
         }).catch(() => []);
 
-        const normalizedByType = (Array.isArray(similarByType) ? similarByType : []).filter((item) => {
-          const normalizedStatus = String(item?.status || "").toLowerCase();
-          return normalizedStatus.includes("dispon");
+        const latestList = await getLatestPets(80).catch(() => []);
+        const currentOngId = data?.ongId || data?.ong?._id || data?.ong;
+        const similarList = buildSimilarPetsList({
+          similarFromApi: similarByType,
+          latestPets: Array.isArray(latestList) ? latestList : [],
+          currentPet: data,
+          petIdParam: petId,
+          currentOngId
         });
-
-        if (normalizedByType.length) {
-          setSimilar(normalizedByType.slice(0, 6));
-        } else {
-          // Fallback para nao deixar vazio quando a API nao aplicar filtro.
-          const list = await getLatestPets(40).catch(() => []);
-          const safeList = Array.isArray(list) ? list : [];
-          setSimilar(
-            safeList
-              .filter((item) => {
-                const normalizedStatus = String(item?.status || "").toLowerCase();
-                const isAvailable = normalizedStatus.includes("dispon");
-                return item.id !== petId && item.type === data?.type && isAvailable;
-              })
-              .slice(0, 6)
-          );
-        }
+        setSimilar(similarList);
       } catch (error) {
         Alert.alert("Erro", error.message);
       } finally {
@@ -114,6 +105,7 @@ export default function PetDetailsScreen({ route, navigation }) {
   const normalizedPetId = pet?._id || pet?.id;
   const normalizedOngId = pet?.ongId || pet?.ong?._id || pet?.ong;
   const isOng = userType === "Ong" || userType === "ONG";
+  const isAdopterProfile = userType === "Adopter" || userType === "adopter";
   const isOngOwner = Boolean(isLogged && isOng && normalizedOngId && user?._id && normalizedOngId === user._id);
   const canRequest = (!isLogged || (isLogged && !isOng)) && pet?.status !== "Adotado";
   const similarPets = useMemo(() => (Array.isArray(similar) ? similar : []), [similar]);
@@ -126,7 +118,7 @@ export default function PetDetailsScreen({ route, navigation }) {
 
   return (
     <AppScreen padded={false} navigation={navigation} activeTab="catalog">
-      <ScrollView contentContainerStyle={{ padding: 16 }}>
+      <ScrollView contentContainerStyle={{ padding: 16 }} nestedScrollEnabled keyboardShouldPersistTaps="handled">
         <View className="mb-3 rounded-3xl border border-[#EAC3D0] bg-white p-2">
           <View className="relative">
             <Image source={{ uri: safeCurrentImage }} className="h-72 w-full rounded-2xl bg-gray-100" />
@@ -202,6 +194,24 @@ export default function PetDetailsScreen({ route, navigation }) {
                   Alert.alert("Entre na conta", "Voce precisa estar logado como adotante.");
                   return;
                 }
+                if (!isAdopterProfile) {
+                  Alert.alert("Acesso restrito", "Apenas adotantes podem solicitar adocao de pets.");
+                  return;
+                }
+                if (!user?.safeAdopter) {
+                  Alert.alert(
+                    "Formulario de adotante seguro",
+                    "Para solicitar adocao, preencha o formulario de adotante seguro primeiro.",
+                    [
+                      { text: "Mais tarde", style: "cancel" },
+                      {
+                        text: "Preencher agora",
+                        onPress: () => navigation.navigate(ROUTES.FormSafeAdopter)
+                      }
+                    ]
+                  );
+                  return;
+                }
                 try {
                   setRequesting(true);
                   await createAdoptionRequest(
@@ -244,7 +254,7 @@ export default function PetDetailsScreen({ route, navigation }) {
           <View className="mt-4 rounded-2xl border border-[#F0D0DB] bg-[#FFF8FA] p-4">
             <Text className="text-xl font-bold text-brand">ONG responsavel</Text>
             <Text className="mt-1 text-textMain">{ong.name}</Text>
-            <Text className="text-sm text-textMuted">{ong.email || "Contato nao informado"}</Text>
+            <Text className="text-sm text-textMuted">Veja mais detalhes no perfil publico da ONG.</Text>
             <AppButton
               className="mt-2"
               variant="secondary"
@@ -256,22 +266,37 @@ export default function PetDetailsScreen({ route, navigation }) {
 
         <View className="mt-4">
           <Text className="mb-2 text-2xl font-bold text-[#1E1720]">Pets similares</Text>
-          <FlatList
-            horizontal
-            data={similarPets}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View className="mr-3">
-                <PetCard
-                  compact
-                  pet={item}
-                  onPress={() => navigation.navigate(ROUTES.PetInfo, { petId: item.id })}
-                />
+          {similarPets.length ? (
+            <ScrollView
+              horizontal
+              nestedScrollEnabled
+              keyboardShouldPersistTaps="handled"
+              showsHorizontalScrollIndicator={false}
+            >
+              <View className="flex-row">
+                {similarPets.map((item, index) => {
+                  const nextId = item.id || item._id;
+                  return (
+                    <View key={String(item.id || item._id || index)} className="mr-3">
+                      <PetCard
+                        compact
+                        pet={item}
+                        onPress={() => {
+                          if (!nextId) return;
+                          navigation.push(ROUTES.PetInfo, {
+                            petId: String(nextId),
+                            initialPet: item
+                          });
+                        }}
+                      />
+                    </View>
+                  );
+                })}
               </View>
-            )}
-            ListEmptyComponent={<Text className="text-sm text-textMuted">Sem recomendações no momento.</Text>}
-            showsHorizontalScrollIndicator={false}
-          />
+            </ScrollView>
+          ) : (
+            <Text className="text-sm text-textMuted">Sem recomendações no momento.</Text>
+          )}
         </View>
       </ScrollView>
     </AppScreen>

@@ -7,6 +7,7 @@ import PageIntro from "../components/ui/PageIntro";
 import PinkCard from "../components/ui/PinkCard";
 import { useAuth } from "../hooks/useAuth";
 import { ROUTES } from "../navigation/routeNames";
+import { isValidEmail } from "../utils/validators";
 
 export default function ForgotPasswordScreen({ navigation, route }) {
   const { requestPasswordReset } = useAuth();
@@ -26,8 +27,8 @@ export default function ForgotPasswordScreen({ navigation, route }) {
         <AppButton
           title={submitting ? "Enviando..." : "Enviar email de recuperação"}
           onPress={async () => {
-            if (!email) {
-              Alert.alert("Informe o email", "Digite seu email cadastrado.");
+            if (!email || !isValidEmail(email)) {
+              Alert.alert("Email invalido", "Digite um email valido cadastrado na plataforma.");
               return;
             }
             try {
@@ -35,7 +36,7 @@ export default function ForgotPasswordScreen({ navigation, route }) {
               await requestPasswordReset(email);
               Alert.alert(
                 "Email enviado",
-                "Confira sua caixa de entrada. Depois, use token e nova senha na tela de redefinição."
+                "Verifique sua caixa de entrada (e o spam) para recuperar sua senha."
               );
               navigation.navigate(ROUTES.ResetPassword, { email });
             } catch (error) {

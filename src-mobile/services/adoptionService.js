@@ -11,7 +11,10 @@ export async function getAdoptionById(adoptionId, token) {
 
 export async function getAdoptionsByOng(ongId, token) {
   const result = await getJson(`/adoptions/by-ong/${ongId}`, token);
-  return Array.isArray(result?.data) ? result.data : Array.isArray(result) ? result : [];
+  if (Array.isArray(result?.adoptions)) return result.adoptions;
+  if (Array.isArray(result?.data)) return result.data;
+  if (Array.isArray(result)) return result;
+  return [];
 }
 
 export async function acceptAdoption(adoptionId, token) {

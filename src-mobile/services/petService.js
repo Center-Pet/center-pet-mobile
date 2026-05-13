@@ -1,4 +1,4 @@
-import { getJson, postJson, putJson, deleteJson } from "./apiClient";
+import { getJson, postJson, patchJson, deleteJson } from "./apiClient";
 
 function mapPet(pet) {
   const images = Array.isArray(pet?.image)
@@ -53,7 +53,7 @@ export async function createPet(payload, token) {
 }
 
 export async function updatePet(petId, payload, token) {
-  return putJson(`/pets/update/${petId}`, payload, token);
+  return patchJson(`/pets/update/${petId}`, payload, token);
 }
 
 export async function deletePet(petId, token) {

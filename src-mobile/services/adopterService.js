@@ -1,4 +1,4 @@
-import { deleteJson, getJson, patchJson, postJson } from "./apiClient";
+import { deleteJson, getJson, patchJson } from "./apiClient";
 
 export async function getAdopterById(id, token) {
   const result = await getJson(`/adopters/${id}`, token);
@@ -14,5 +14,5 @@ export async function deleteAdopter(id, token) {
 }
 
 export async function updateSafeAdopter(payload, token) {
-  return postJson("/adopters/updateSafeAdopter", payload, token);
+  return patchJson("/adopters/updateSafeAdopter", payload, token);
 }

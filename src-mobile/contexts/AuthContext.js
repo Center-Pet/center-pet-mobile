@@ -59,14 +59,21 @@ export function AuthProvider({ children }) {
       async requestPasswordReset(email) {
         return forgotPassword(email);
       },
-      async confirmPasswordReset({ token, password, email }) {
-        return resetPassword(token, password, email);
+      async confirmPasswordReset({ token, password }) {
+        return resetPassword(token, password);
       },
       async logout() {
         await clearAuthSession();
         setUser(null);
         setToken(null);
         setUserType(null);
+      },
+      /** Atualiza o usuario na sessao (ex.: apos formulario de adotante seguro). */
+      async mergeSessionUser(partial) {
+        if (!token || !userType || !user) return;
+        const next = { ...user, ...partial };
+        await saveAuthSession(next, token, userType);
+        setUser(next);
       }
     }),
     [isLoading, token, user, userType]

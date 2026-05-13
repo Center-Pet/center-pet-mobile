@@ -1,4 +1,4 @@
-import { deleteJson, getJson, postJson, putJson } from "./apiClient";
+import { deleteJson, getJson, patchJson, postJson } from "./apiClient";
 
 export async function getAllOngs(token) {
   const result = await getJson("/ongs", token);
@@ -19,7 +19,7 @@ export async function getOngBySlug(ongSlug, token) {
 }
 
 export function updateOngProfile(ongId, payload, token) {
-  return putJson(`/ongs/editProfile/${ongId}`, payload, token);
+  return patchJson(`/ongs/editProfile/${ongId}`, payload, token);
 }
 
 export function deleteOng(ongId, token) {

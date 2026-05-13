@@ -22,6 +22,7 @@ export default function EditUserScreen({ navigation }) {
   const [saving, setSaving] = useState(false);
   const [loadingCep, setLoadingCep] = useState(false);
   const [noNumber, setNoNumber] = useState(false);
+  const [pickedImageMeta, setPickedImageMeta] = useState(null);
   const [form, setForm] = useState({
     fullName: "",
     description: "",
@@ -58,6 +59,7 @@ export default function EditUserScreen({ navigation }) {
           email: profile?.email || "",
         });
         setNoNumber(String(profile?.number || "").toUpperCase() === "S/N");
+        setPickedImageMeta(null);
       } finally {
         setLoading(false);
       }
@@ -66,13 +68,23 @@ export default function EditUserScreen({ navigation }) {
   }, [token, user?._id]);
 
   async function handlePickImage() {
+    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!perm.granted) {
+      Alert.alert("Permissao necessaria", "Autorize o acesso as fotos para alterar a imagem de perfil.");
+      return;
+    }
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ["images"],
       allowsEditing: true,
       quality: 0.85
     });
     if (result.canceled || !result.assets?.[0]?.uri) return;
-    setForm((prev) => ({ ...prev, profileImg: result.assets[0].uri }));
+    const asset = result.assets[0];
+    setForm((prev) => ({ ...prev, profileImg: asset.uri }));
+    setPickedImageMeta({
+      mimeType: asset.mimeType || "image/jpeg",
+      fileName: asset.fileName || `profile-${Date.now()}.jpg`
+    });
   }
 
   async function handleLookupCep(value) {
@@ -117,7 +129,7 @@ export default function EditUserScreen({ navigation }) {
         profileImgUrl?.startsWith?.("ph://");
 
       if (isLocalImage) {
-        profileImgUrl = await uploadImage(profileImgUrl);
+        profileImgUrl = await uploadImage(profileImgUrl, pickedImageMeta || {});
       }
 
       const payload = {
@@ -136,6 +148,7 @@ export default function EditUserScreen({ navigation }) {
       };
 
       await updateAdopterProfile(user._id, payload, token);
+      setPickedImageMeta(null);
       Alert.alert("Perfil atualizado", "Seus dados foram salvos com sucesso.", [
         {
           text: "OK",
