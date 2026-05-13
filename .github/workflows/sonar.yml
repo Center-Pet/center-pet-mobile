@@ -1,0 +1,29 @@
+name: SonarCloud
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  sonarqube:
+    name: SonarQube Scan (Cloud)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Anexar organization e projectKey (secrets)
+        run: |
+          printf '\nsonar.organization=%s\nsonar.projectKey=%s\n' \
+            "${SONAR_ORGANIZATION}" "${SONAR_PROJECT_KEY}" >> sonar-project.properties
+        env:
+          SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v7.0.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
